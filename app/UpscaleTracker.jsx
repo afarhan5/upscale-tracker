@@ -1211,7 +1211,7 @@ function AuthPage({onLogin,addToast,theme,setTheme}) {
     {icon:"🧠",text:"AI Life Coach powered by Claude"},
     {icon:"📊",text:"Smart analytics & insights"},
     {icon:"💰",text:"Personal finance tracker"},
-    {icon:"⏱",text:"Pomodoro focus timer"},
+    {icon:"⏰",text:"Pomodoro focus timer"},
     {icon:"❤️",text:"Track your daily health & wellness"},
     {icon:"🗺️",text:"Skill roadmap builder"},
     {icon:"📝",text:"To‑Do notes for quick ideas"},
@@ -1220,15 +1220,15 @@ function AuthPage({onLogin,addToast,theme,setTheme}) {
   return (
     <div style={{minHeight:"100vh",background:`radial-gradient(ellipse at 60% 0%,${C.accent}22 0%,transparent 60%),radial-gradient(ellipse at 0% 100%,${C.blue}15 0%,transparent 60%),${C.bg}`,display:"flex",flexDirection:"column"}}>
       {/* Top nav */}
-      <div className="auth-top" style={{padding:"18px 32px",display:"flex",justifyContent:"space-between",alignItems:"center",gap:16}}>
-        <div style={{display:"flex",alignItems:"center",gap:10}}>
-          <LogoSVG size={36}/>
-          <span style={{fontSize:20,fontWeight:900,background:"linear-gradient(135deg,#8b5cf6,#ec4899,#f97316)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",whiteSpace:"nowrap"}}>Upscale Tracker</span>
+      <div className="auth-top" style={{padding:"14px 20px",display:"flex",justifyContent:"space-between",alignItems:"center",gap:10}}>
+        <div style={{display:"flex",alignItems:"center",gap:8}}>
+          <LogoSVG size={32}/>
+          <span style={{fontSize:18,fontWeight:900,background:"linear-gradient(135deg,#8b5cf6,#ec4899,#f97316)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",whiteSpace:"nowrap"}}>Upscale Tracker</span>
         </div>
-        <div className="auth-top-right" style={{display:"flex",gap:12,alignItems:"center"}}>
-          <span style={{color:C.muted,fontSize:13}} className="hide-sm">Already have an account?</span>
-          <button onClick={()=>setTab("signin")} style={{padding:"7px 18px",borderRadius:9,border:`1.5px solid ${C.border}`,background:"transparent",color:C.text,cursor:"pointer",fontWeight:600,fontSize:13}}>Sign In</button>
-          <button onClick={() => setTheme(theme === "dark" ? "light" : "dark")} style={{padding:"8px",borderRadius:9,border:`1.5px solid ${C.border}`,background:"transparent",color:C.text,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,width:38,height:38,transition:"transform 0.2s"}} title="Toggle Light/Dark Mode" onMouseEnter={e=>e.currentTarget.style.transform="scale(1.05)"} onMouseLeave={e=>e.currentTarget.style.transform="none"}>
+        <div className="auth-top-right" style={{display:"flex",gap:8,alignItems:"center",flexShrink:0}}>
+          <span style={{color:C.muted,fontSize:12,whiteSpace:"nowrap"}}>Already have an account?</span>
+          <button onClick={()=>setTab("signin")} style={{padding:"6px 14px",borderRadius:9,border:`1.5px solid ${C.border}`,background:"transparent",color:C.text,cursor:"pointer",fontWeight:600,fontSize:12,whiteSpace:"nowrap",flexShrink:0}}>Sign In</button>
+          <button onClick={() => setTheme(theme === "dark" ? "light" : "dark")} style={{padding:"6px",borderRadius:9,border:`1.5px solid ${C.border}`,background:"transparent",color:C.text,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",fontSize:15,width:34,height:34,flexShrink:0,transition:"transform 0.2s"}} title="Toggle Light/Dark Mode" onMouseEnter={e=>e.currentTarget.style.transform="scale(1.05)"} onMouseLeave={e=>e.currentTarget.style.transform="none"}>
             {theme === "dark" ? "☀️" : "🌙"}
           </button>
         </div>
@@ -1251,7 +1251,7 @@ function AuthPage({onLogin,addToast,theme,setTheme}) {
           <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16}}>
             {features.map((f,i)=>(
               <div key={i} style={{display:"flex",alignItems:"center",gap:12,padding:"14px 16px",borderRadius:16,background:C.card,border:`1px solid ${C.border}`,boxShadow:theme==="dark"?"0 4px 20px #0002":"0 4px 20px rgba(0,0,0,0.05)",transition:"transform 0.2s"}} onMouseEnter={e=>e.currentTarget.style.transform="translateY(-2px)"} onMouseLeave={e=>e.currentTarget.style.transform="none"}>
-                <span style={{fontSize:22,background:C.soft,width:40,height:40,borderRadius:10,display:"flex",alignItems:"center",justifyContent:"center"}}>{f.icon}</span>
+                <span style={{fontSize:22,background:theme==="dark"?"#8b5cf630":"#8b5cf618",border:`1px solid ${C.accent}30`,width:40,height:40,borderRadius:10,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>{f.icon}</span>
                 <span style={{fontSize:13,fontWeight:700,color:C.text,lineHeight:1.3}}>{f.text}</span>
               </div>
             ))}
@@ -2749,7 +2749,7 @@ export default function UpscaleTracker() {
               <Field label="Category" C={C}><Select C={C} value={habitForm.cat} onChange={e=>setHabitForm({...habitForm,cat:e.target.value})} options={["Personal","Health","Learning","Work","Mindfulness","Finance","Social","Other"]}/></Field>
               <Field label="Frequency" C={C}><Select C={C} value={habitForm.freq} onChange={e=>setHabitForm({...habitForm,freq:e.target.value})} options={["Daily","Weekly","Monthly"]}/></Field>
             </div>
-            <Field label="Goal Days" C={C}><Input C={C} type="number" value={habitForm.goalDays} onChange={e=>setHabitForm({...habitForm,goalDays:parseInt(e.target.value)||30})} min={1}/></Field>
+            <Field label="Goal Days" C={C}><Input C={C} type="number" value={habitForm.goalDays === "" ? "" : habitForm.goalDays} onChange={e=>setHabitForm({...habitForm,goalDays:e.target.value===""?"":parseInt(e.target.value)||""})} min={1}/></Field>
             <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12}}>
               <Field label="Start Date" C={C}><DateTimePicker C={C} value={habitForm.startDate} onChange={v=>setHabitForm({...habitForm,startDate:v})} placeholder="Start date"/></Field>
               <Field label="End Date" C={C}><DateTimePicker C={C} value={habitForm.endDate} onChange={v=>setHabitForm({...habitForm,endDate:v})} placeholder="End date"/></Field>
@@ -2759,8 +2759,9 @@ export default function UpscaleTracker() {
             <Field label="Notes" C={C}><Textarea C={C} value={habitForm.notes||""} onChange={e=>setHabitForm({...habitForm,notes:e.target.value})} placeholder="Any additional notes..."/></Field>
             <Btn onClick={()=>{
               if(!habitForm.title)return;
-              if(habitForm.id){updateHabit(habitForm.id,habitForm);setModal(null);}
-              else{addHabit(habitForm);}
+              const payload = {...habitForm, goalDays: habitForm.goalDays === "" ? 30 : (parseInt(habitForm.goalDays) || 30)};
+              if(habitForm.id){updateHabit(habitForm.id,payload);setModal(null);}
+              else{addHabit(payload);}
             }} C={C} style={{width:"100%"}}>{habitForm.id?"Save Changes ✓":"Add Habit ✓"}</Btn>
           </div>
         </Modal>
@@ -2983,13 +2984,13 @@ export default function UpscaleTracker() {
               </div>
               <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12}}>
                 <Field label="Frequency" C={C}><Select C={C} value={habitForm.freq} onChange={e=>setHabitForm({...habitForm,freq:e.target.value})} options={["Daily","Weekly","Monthly"]}/></Field>
-                <Field label="Goal Days" C={C}><Input C={C} type="number" min={1} value={habitForm.goalDays||30} onChange={e=>setHabitForm({...habitForm,goalDays:parseInt(e.target.value)||30})}/></Field>
+                <Field label="Goal Days" C={C}><Input C={C} type="number" min={1} value={habitForm.goalDays === "" ? "" : habitForm.goalDays} onChange={e=>setHabitForm({...habitForm,goalDays:e.target.value===""?"":parseInt(e.target.value)||""})}/></Field>
               </div>
               <Field label="Notes" C={C}><Textarea C={C} value={habitForm.notes||""} onChange={e=>setHabitForm({...habitForm,notes:e.target.value})} placeholder="Optional notes..."/></Field>
               <div style={{display:"flex",gap:10}}>
                 <Btn onClick={async()=>{
                   if(!habitForm.title){addToast("Title is required","error");return;}
-                  const payload={...habitForm,cat:"Health"};
+                  const payload={...habitForm,cat:"Health",goalDays:habitForm.goalDays===""?30:(parseInt(habitForm.goalDays)||30)};
                   if(habitForm.id) await updateHabit(habitForm.id,payload);
                   else await addHabit(payload);
                   setModal(null);
@@ -3079,8 +3080,8 @@ export default function UpscaleTracker() {
               <Field label="Color" C={C}><input type="color" value={skillForm.color} onChange={e=>setSkillForm({...skillForm,color:e.target.value})} style={{width:"100%",height:42,borderRadius:10,border:`1px solid ${C.border}`,background:C.inputBg,cursor:"pointer"}}/></Field>
             </div>
             <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12}}>
-              <Field label="Hours Done" C={C}><Input C={C} type="number" value={skillForm.hours} onChange={e=>setSkillForm({...skillForm,hours:parseInt(e.target.value)||0})} min={0}/></Field>
-              <Field label="Goal Hours" C={C}><Input C={C} type="number" value={skillForm.goalHours} onChange={e=>setSkillForm({...skillForm,goalHours:parseInt(e.target.value)||200})} min={1}/></Field>
+              <Field label="Hours Done" C={C}><Input C={C} type="number" value={skillForm.hours === "" ? "" : skillForm.hours} onChange={e=>setSkillForm({...skillForm,hours:e.target.value===""?"":parseInt(e.target.value)||""})} min={0}/></Field>
+              <Field label="Goal Hours" C={C}><Input C={C} type="number" value={skillForm.goalHours === "" ? "" : skillForm.goalHours} onChange={e=>setSkillForm({...skillForm,goalHours:e.target.value===""?"":parseInt(e.target.value)||""})} min={1}/></Field>
             </div>
             <Field label="Roadmap" C={C}><Select C={C} value={skillForm.roadmapId||""} onChange={e=>setSkillForm({...skillForm,roadmapId:e.target.value?parseInt(e.target.value):null})} options={[{value:"",label:"No Roadmap"},...roadmaps.map(r=>({value:r.id,label:`${r.icon} ${r.title}`}))]}/></Field>
             <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12}}>
@@ -3088,7 +3089,19 @@ export default function UpscaleTracker() {
               <Field label="End Date" C={C}><DateTimePicker C={C} value={skillForm.endDate} onChange={v=>setSkillForm({...skillForm,endDate:v})} placeholder="End date"/></Field>
             </div>
             <Field label="Notes" C={C}><Textarea C={C} value={skillForm.notes||""} onChange={e=>setSkillForm({...skillForm,notes:e.target.value})} placeholder="Any additional notes..."/></Field>
-            <Btn onClick={()=>{skillForm.name&&(editingSkill?updateSkill(editingSkill.id,{...skillForm,roadmapId:skillForm.roadmapId||editingSkill.roadmapId}):addSkillToRoadmap(skillForm));if(editingSkill)setEditingSkill(null);}} C={C} style={{width:"100%"}}>{editingSkill?"Save Changes ✓":"Add Skill ✓"}</Btn>
+            <Btn onClick={()=>{
+              if(!skillForm.name) return;
+              const payload = {
+                ...skillForm,
+                hours: skillForm.hours === "" ? 0 : (parseInt(skillForm.hours) || 0),
+                goalHours: skillForm.goalHours === "" ? 200 : (parseInt(skillForm.goalHours) || 200),
+                roadmapId: skillForm.roadmapId || (editingSkill ? editingSkill.roadmapId : null)
+              };
+              if(editingSkill) updateSkill(editingSkill.id, payload);
+              else addSkillToRoadmap(payload);
+              if(editingSkill) setEditingSkill(null);
+              setModal(null);
+            }} C={C} style={{width:"100%"}}>{editingSkill?"Save Changes ✓":"Add Skill ✓"}</Btn>
           </div>
         </Modal>
       )}
@@ -3301,7 +3314,7 @@ export default function UpscaleTracker() {
             <div style={{background:C.card,border:`1px solid ${C.border}`,borderRadius:20,padding:28,width:"100%",maxWidth:320}}>
               <h3 style={{margin:"0 0 16px",color:C.text,fontSize:16}}>Set Custom Time</h3>
               <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:20}}>
-                <input type="number" min={1} max={120} value={timerEditMins} onChange={e=>setTimerEditMins(parseInt(e.target.value)||1)} style={{flex:1,padding:"12px 16px",borderRadius:10,border:`1px solid ${C.border}`,background:C.inputBg,color:C.text,fontSize:16,fontWeight:700}}/>
+                <input type="number" min={1} max={120} value={timerEditMins === "" ? "" : timerEditMins} onChange={e=>setTimerEditMins(e.target.value===""?"":parseInt(e.target.value)||"")} onBlur={e=>{if(!timerEditMins) setTimerEditMins(1);}} style={{flex:1,padding:"12px 16px",borderRadius:10,border:`1px solid ${C.border}`,background:C.inputBg,color:C.text,fontSize:16,fontWeight:700}}/>
                 <span style={{color:C.muted,fontSize:14}}>minutes</span>
               </div>
               <div style={{display:"flex",gap:10}}>
@@ -3319,7 +3332,7 @@ export default function UpscaleTracker() {
               <span style={{fontSize:13,color:C.text}}>{m.l}</span>
               <div style={{display:"flex",alignItems:"center",gap:10}}>
                 <button onClick={()=>{setTimerConfig(c=>({...c,[m.k]:Math.max(1,c[m.k]-1)})); if(timerMode===m.k) resetTimer();}} style={{width:32,height:32,borderRadius:8,border:`1px solid ${C.border}`,background:C.soft,color:C.text,cursor:"pointer",fontSize:16,display:"flex",alignItems:"center",justifyContent:"center"}}>-</button>
-                <input type="number" min={1} max={180} value={timerConfig[m.k]} onChange={e => { const val = Math.max(1, parseInt(e.target.value) || 1); setTimerConfig(c => ({...c, [m.k]: val})); if(timerMode === m.k) resetTimer(); }} style={{width:52,padding:"4px 6px",textAlign:"center",fontWeight:800,color:C.text,fontSize:14,borderRadius:8,border:`1px solid ${C.border}`,background:C.inputBg}} title="Type duration manually"/>
+                <input type="number" min={1} max={180} value={timerConfig[m.k] === "" ? "" : timerConfig[m.k]} onChange={e => { const val = e.target.value === "" ? "" : Math.max(1, parseInt(e.target.value) || 1); setTimerConfig(c => ({...c, [m.k]: val})); if(timerMode === m.k) resetTimer(); }} onBlur={e => { if(!timerConfig[m.k]) setTimerConfig(c => ({...c, [m.k]: 1})); }} style={{width:52,padding:"4px 6px",textAlign:"center",fontWeight:800,color:C.text,fontSize:14,borderRadius:8,border:`1px solid ${C.border}`,background:C.inputBg}} title="Type duration manually"/>
                 <button onClick={()=>{setTimerConfig(c=>({...c,[m.k]:c[m.k]+1})); if(timerMode===m.k) resetTimer();}} style={{width:32,height:32,borderRadius:8,border:`1px solid ${C.border}`,background:C.soft,color:C.text,cursor:"pointer",fontSize:16,display:"flex",alignItems:"center",justifyContent:"center"}}>+</button>
               </div>
             </div>
@@ -3767,6 +3780,10 @@ export default function UpscaleTracker() {
           .hide-xs { display: none!important; }
           .topbar-right { gap: 4px!important; }
           .dash-stats-grid { grid-template-columns: 1fr!important; }
+          .auth-top { padding: 10px 12px!important; }
+          .auth-top-right { gap: 4px!important; }
+          .auth-top-right span { font-size: 10px!important; white-space: nowrap!important; }
+          .auth-top-right button { font-size: 11px!important; padding: 4px 8px!important; white-space: nowrap!important; }
         }
       `}</style>
 
