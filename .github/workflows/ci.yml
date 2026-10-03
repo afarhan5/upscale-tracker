@@ -1,0 +1,37 @@
+name: CI Build & Lint Check
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+          cache-dependency-path: my-frontend/package-lock.json
+
+      - name: Install Dependencies
+        working-directory: ./
+        run: npm ci
+
+      - name: Lint Check
+        working-directory: ./
+        run: npm run lint --if-present
+
+      - name: Build Next.js App
+        working-directory: ./
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+        run: npm run build

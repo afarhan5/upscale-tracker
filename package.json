@@ -1,0 +1,24 @@
+{
+  "name": "my-nextjs-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.110.7",
+    "next": "^16.1.6",
+    "nodemailer": "^9.0.3",
+    "razorpay": "^2.9.8",
+    "react": "^18",
+    "react-dom": "^18",
+    "stripe": "^22.3.2"
+  },
+  "devDependencies": {
+    "eslint": "^10.0.3",
+    "eslint-config-next": "^16.1.6"
+  }
+}
