@@ -631,13 +631,13 @@ function Select({C,options,...props}) {
 
 function Btn({children,onClick,variant="primary",size="md",C,disabled,style:s}) {
   const [hover,setHover]=useState(false);
-  const pad=size==="sm"?"6px 14px":size==="lg"?"14px 28px":"10px 20px";
+  const pad=size==="sm"?"5px 12px":size==="lg"?"12px 24px":"8px 14px";
   const bg=variant==="primary"?(hover?C.glow:C.accent):variant==="danger"?(hover?"#dc2626":C.red):hover?C.soft:"transparent";
   const border=variant==="outline"?`1.5px solid ${C.border}`:"none";
   const col=["ghost","outline"].includes(variant)?C.muted:"#fff";
   return (
     <button onClick={onClick} disabled={disabled} onMouseEnter={()=>setHover(true)} onMouseLeave={()=>setHover(false)}
-      style={{padding:pad,borderRadius:10,border,background:bg,color:col,fontWeight:700,cursor:disabled?"not-allowed":"pointer",fontSize:size==="sm"?12:14,opacity:disabled?0.6:1,transition:"all 0.15s",display:"flex",alignItems:"center",gap:6,fontFamily:"inherit",...s}}>
+      style={{padding:pad,borderRadius:10,border,background:bg,color:col,fontWeight:700,cursor:disabled?"not-allowed":"pointer",fontSize:size==="sm"?11:13,whiteSpace:"nowrap",justifyContent:"center",opacity:disabled?0.6:1,transition:"all 0.15s",display:"flex",alignItems:"center",gap:5,fontFamily:"inherit",...s}}>
       {children}
     </button>
   );

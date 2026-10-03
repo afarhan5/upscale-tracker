@@ -53,17 +53,27 @@ export async function POST(req) {
         if (formattedMsgs.length > 0 && formattedMsgs[0].role === 'user') {
           formattedMsgs[0].parts[0].text = `[System Message: ${systemPrompt}] \n\n User Message: ${formattedMsgs[0].parts[0].text}`;
         }
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${geminiKey}`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ contents: formattedMsgs })
-        });
-        if (response.ok) {
-          const data = await response.json();
-          console.log('✅ AI COACH (Gemini Success)');
-          return Response.json({ reply: data.candidates[0].content.parts[0].text });
+        
+        const modelsToTry = ['gemini-3.8-flash', 'gemini-3.1-flash-lite', 'gemini-flash-latest'];
+        for (const modelName of modelsToTry) {
+          try {
+            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${geminiKey}`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ contents: formattedMsgs })
+            });
+            if (response.ok) {
+              const data = await response.json();
+              const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+              if (text) {
+                console.log(`✅ AI COACH (Gemini Success - ${modelName})`);
+                return Response.json({ reply: text });
+              }
+            }
+          } catch (e) {
+            console.error(`❌ Gemini ${modelName} Error:`, e.message);
+          }
         }
-        console.error('❌ Gemini Error:', await response.text());
       } catch (e) { console.error('❌ Gemini Exception:', e.message); }
     }
 
